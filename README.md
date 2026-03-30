@@ -76,19 +76,54 @@ rm file2.txt  # 'file2.txt' 파일 삭제
 
 👉 결과:
 
-```
-(출력 결과 붙여넣기)
-```
+```bash
+$ pwd
+/d/git/E1_1
 
----
+$ mkdir test-dir
+
+$ ls
+app/  docs/  e1_1.md  logs/  README.md  test-dir/
+
+$ cd test-dir
+
+$ pwd
+/d/git/E1_1/test-dir
+
+$ touch hello.md
+
+$ ls
+hello.md
+
+$ cat hello.md
+
+$ echo "hello codyssey" >> hello.md
+
+$ cat hello.md
+hello codyssey
+
+$ cp hello.md hello1.md
+
+$ ls
+hello.md  hello1.md
+
+$ mv hello1.md hello2.md
+
+$ ls
+hello.md  hello2.md
+
+$ rm hello2.md
+
+$ ls
+hello.md
+```
 
 ### 📄 파일 내용 확인
 
 ```bash
-cat file.txt  # 'file.txt' 파일의 내용을 터미널 화면에 출력
+$ cat hello.md # 'file.txt' 파일의 내용을 터미널 화면에 출력
+hello codyssey
 ```
-
----
 
 ## 5. 🔐 권한 실습
 
