@@ -96,3 +96,30 @@ docker ps
    
 이제 -d 옵션을 넣어서 다시 실행해 보시겠어요? 아니면 종료된 컨테이너를 다시 살리는 방법이 궁금하신가요?
 
+
+
+mpeg46551@c4r3s5 E1_1 % git config --global user.name "mpegdj"
+mpeg46551@c4r3s5 E1_1 % git config --global user.email "mpeg4@ymail.com"
+
+mpeg46551@c4r3s5 E1_1 % git remote add origin https://github.com/mpegdj/E1_1
+
+>>>mpeg46551@c4r3s5 E1_1 % git pull origin main --rebase
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 844 bytes | 281.00 KiB/s, done.
+From https://github.com/mpegdj/E1_1
+ * branch            main       -> FETCH_HEAD
+ * [new branch]      main       -> origin/main
+Successfully rebased and updated refs/heads/main.
+
+>>>mpeg46551@c4r3s5 E1_1 % git push -u origin main      
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 7.72 KiB | 7.72 MiB/s, done.
+Total 4 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/mpegdj/E1_1
+   57886bb..cfc4402  main -> main
+branch 'main' set up to track 'origin/main'.
