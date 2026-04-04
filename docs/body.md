@@ -8,3 +8,4 @@
 [현우](https://github.com/yh90minopdgklm)
 [신희수](https://github.com/star-candy/codyssey1-3)
 [박채연](https://github.com/seven2762/Codyssey-workstation)
+[백동재](https://github.com/VectorSophie/codyssey-e1-1)
