@@ -176,6 +176,7 @@ Client:
 ```
 
 ### 4.4 기본 Docker 명령
+예: "프로젝트는 소스 코드(app/), 설정 파일(docker1/), 문서(docs/)로 구분하여 관리 효율성을 높였습니다."
 
 ```bash
 mpeg46551@c5r1s2 test-dir % docker images
@@ -312,6 +313,7 @@ mpeg46551@c5r1s2 docker1 % curl -s http://localhost:8080
 </body>
 </html>%  
 ```
+![마우트후 변경](pic/localhost8080.png)
 
 1. -it (대화형 모드)
 * 언제 쓰나요? 아까처럼 ubuntu 리눅스 안으로 직접 들어가서 명령어를 치고, 파일 권한(ls -l)을 확인하는 등 **"나랑 리눅스가 실시간으로 대화"**해야 할 때 씁니다.
@@ -374,25 +376,105 @@ CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS    
 
 ```
 # 호스트에서 app/index.html 수정 후 컨테이너 내부 확인
+```bash
+mpeg46551@c5r1s2 docker1 % curl -s http://localhost:8080                                                               
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Docker Web</title>
+</head>
+<body>
+    <h1>Hello Codyssey!</h1>
+    <p>Docker 컨테이너에서 실행 중인 웹 서버입니다.</p>
+    <p>-v option을 사용하여 컨테이너 내부의 디렉토리를 호스트 시스템과 연결할 수 있습니다.</p>
+</body>
+</html>%   
 ```
+![마우트후 변경](pic/localhost_v.png)
 
+mpeg46551@c5r1s2 docker1 % docker ps -a 
+CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+2367aa0e0c90   my-web-img   "/docker-entrypoint.…"   14 minutes ago   Up 14 minutes   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   web-bind
+
+mpeg46551@c5r1s2 docker1 % docker rm -f web-bind                                                                     
+web-bind
+
+mpeg46551@c5r1s2 docker1 % docker ps -a         
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+mpeg46551@c5r1s2 docker1 % docker images
+REPOSITORY    TAG       IMAGE ID       CREATED             SIZE
+my-web-img    latest    082ae542ed18   50 minutes ago      62.1MB
+<none>        <none>    f228a01c58c9   About an hour ago   62.1MB
+hello-world   latest    e2ac70e7319a   11 days ago         10.1kB
+ubuntu        latest    f794f40ddfff   5 weeks ago         78.1MB
+
+mpeg46551@c5r1s2 docker1 % cat ./app/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Docker Web</title>
+</head>
+<body>
+    <h1>Hello Codyssey!</h1>
+    <p>Docker 컨테이너에서 실행 중인 웹 서버입니다.</p>
+    <p>-v option을 사용하여 컨테이너 내부의 디렉토리를 호스트 시스템과 연결할 수 있습니다.</p>
+</body>
+</html>%   
 ### 4.9 Docker 볼륨
 
 ```bash
-docker volume create my-data
-docker run -d --name vol-test -v my-data:/data ubuntu sleep 3600
-docker exec vol-test sh -c "echo hello > /data/hello.txt"
-docker rm -f vol-test
-docker run --rm --name vol-test2 -v my-data:/data ubuntu ls /data
+mpeg46551@c5r1s2 docker1 % docker volume create my-data
+my-data
+
+mpeg46551@c5r1s2 docker1 % docker run  -it --name vol-test -v my-data:/data ubuntu
+root@b89e021e201e:/# ls
+bin  boot  data  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
+root@b89e021e201e:/# cat data/my-test.txt 
+Hello, Docker Volume!
+root@b89e021e201e:/# echo "Hello, Docker Volume!" > my-test.txt
+root@b89e021e201e:/# ls
+bin  boot  data  dev  etc  home  lib  lib64  media  mnt  my-test.txt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
+root@b89e021e201e:/# cd data                                                    
+root@b89e021e201e:/data# echo "Hello, Docker Volume!" > my-test.txt
+root@b89e021e201e:/data# ls     
+my-test.txt
+root@b89e021e201e:/data# cat my-test.txt
+Hello, Docker Volume!
+root@b89e021e201e:/data# exit
+exit
+
+mpeg46551@c5r1s2 docker1 % docker rm -f vol-test                                  
+vol-test
+mpeg46551@c5r1s2 docker1 % docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+mpeg46551@c5r1s2 docker1 % docker run  -it --name vol-test -v my-data:/data ubuntu
+root@727c396dc454:/# ls  # 아까만든 my-test.txt가 없어졌다
+bin  boot  data  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@727c396dc454:/# cat data/my-test.txt #하지만 마운트된 data아래 my-test.txt는 살아 있다.
+Hello, Docker Volume!
+root@727c396dc454:/# exit
+exit
+mpeg46551@c5r1s2 docker1 % docker rm -f vol-test                                  
+vol-test
 ```
 
 ### 4.10 Git 및 GitHub
 
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "you@example.com"
+git config --global user.name "mpegxx"
+git config --global user.email "mpegx@ymail.com"
 git config --global init.defaultBranch main
 git config --list
+git init
+git add .
+git commit -m "첫 번째 도커 공부 기록"
+git remote add origin https://github.com/mpegxx/내-저장소-이름.git
+git push -u origin main
 ```
 
 - GitHub 연동: VS Code Git 확장 또는 명령어로 원격 저장소 추가

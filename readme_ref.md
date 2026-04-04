@@ -273,36 +273,29 @@ docker run -it --name ubuntu2 -v my-vol:/app/data ubuntu bash
 민감정보는 마스킹했습니다. 실제 로컬에서는 본인 이름·이메일이 설정되어 있습니다.
 
 ```bash
-hugeung@gimdaeung-ui-MacBookAir Codyssey1st_rookie % git config --list
-credential.helper=osxkeychain
-user.name=Daeung-03
-user.email=eodnd74@yonsei.ac.kr
-credential.helper=store
-core.autocrlf=input
-core.editor=code
+
+mpeg46551@c5r1s2 E1_1 % git config --global -l
+user.name=mpegdj
+user.email=mpeg4@ymail.com
 init.defaultbranch=main
 
 hugeung@gimdaeung-ui-MacBookAir Codyssey1st_rookie % git remote -v
 origin  https://github.com/Daeung-03/Codyssey_rookieQ1.git (fetch)
 origin  https://github.com/Daeung-03/Codyssey_rookieQ1.git (push)
 ```
+연동
+```bash
+mpeg46551@c5r1s2 E1_1 % git remote -v
+origin  https://github.com/mpegdj/E1_1.git (fetch)
+origin  https://github.com/mpegdj/E1_1.git (push)
+mpeg46551@c5r1s2 E1_1 % git log --oneline --graph
 
+mpeg46551@c5r1s2 E1_1 % git log --oneline --graph --all
+* db8eb00 (HEAD -> main, origin/main, origin/HEAD) ammend git and study file
+```
 
 
 ---
 
 ## 8. 저장소 구조 (제출물)
 
-```text
-.
-├── README.md                 # 본 기술 문서
-├── logs/
-│   ├── terminal.md           # 터미널·권한 로그
-│   ├── docker.md             # Docker 운영·볼륨·바인드 마운트
-│   └── docker_web.md         # 웹 이미지 빌드·포트
-└── my_webserver/
-    ├── Dockerfile
-    └── index.html            # 정적 웹 소스
-```
-
-평가자는 **본 README와 `logs/` 링크**만으로 수행 경로와 명령·출력을 추적할 수 있습니다. 로컬 절대 경로에 의존하는 부분은 `~` 또는 저장소 상대 경로 `my_webserver/` 기준으로 다시 실행하면 됩니다.
